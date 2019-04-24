@@ -57,6 +57,9 @@ class Query
     /** @var string */
     protected $callback;
 
+    /** @var string */
+    protected $ServiceURL;
+
     /**
      * Creates a google analytics query.
      *
@@ -73,6 +76,23 @@ class Query
         $this->startIndex = 1;
         $this->maxResults = 10000;
         $this->prettyPrint = false;
+        $this->ServiceURL = $this::URL;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServiceURL()
+    {
+        return $this->ServiceURL;
+    }
+
+    /**
+     * @param string $ServiceURL
+     */
+    public function setServiceURL($ServiceURL)
+    {
+        $this->ServiceURL = $ServiceURL;
     }
 
     /**
@@ -129,7 +149,7 @@ class Query
     public function setStartDate(\DateTime $startDate = null)
     {
         $this->startDate = $startDate;
-        
+
         return $this;
     }
 
@@ -163,7 +183,7 @@ class Query
     public function setEndDate(\DateTime $endDate = null)
     {
         $this->endDate = $endDate;
-        
+
         return $this;
     }
 
@@ -201,7 +221,7 @@ class Query
         foreach ($metrics as $metric) {
             $this->addMetric($metric);
         }
-        
+
         return $this;
     }
 
@@ -215,7 +235,7 @@ class Query
     public function addMetric($metric)
     {
         $this->metrics[] = $metric;
-        
+
         return $this;
     }
 
@@ -253,7 +273,7 @@ class Query
         foreach ($dimensions as $dimension) {
             $this->addDimension($dimension);
         }
-        
+
         return $this;
     }
 
@@ -267,7 +287,7 @@ class Query
     public function addDimension($dimension)
     {
         $this->dimensions[] = $dimension;
-        
+
         return $this;
     }
 
@@ -305,7 +325,7 @@ class Query
         foreach ($sorts as $sort) {
             $this->addSort($sort);
         }
-        
+
         return $this;
     }
 
@@ -319,7 +339,7 @@ class Query
     public function addSort($sort)
     {
         $this->sorts[] = $sort;
-        
+
         return $this;
     }
 
@@ -357,7 +377,7 @@ class Query
         foreach ($filters as $filter) {
             $this->addFilter($filter);
         }
-        
+
         return $this;
     }
 
@@ -371,7 +391,7 @@ class Query
     public function addFilter($filter)
     {
         $this->filters[] = $filter;
-        
+
         return $this;
     }
 
@@ -405,7 +425,7 @@ class Query
     public function setSegment($segment)
     {
         $this->segment = $segment;
-        
+
         return $this;
     }
 
@@ -429,7 +449,7 @@ class Query
     public function setStartIndex($startIndex)
     {
         $this->startIndex = $startIndex;
-        
+
         return $this;
     }
 
@@ -453,7 +473,7 @@ class Query
     public function setMaxResults($maxResults)
     {
         $this->maxResults = $maxResults;
-        
+
         return $this;
     }
 
@@ -477,7 +497,7 @@ class Query
     public function setPrettyPrint($prettyPrint)
     {
         $this->prettyPrint = $prettyPrint;
-        
+
         return $this;
     }
 
@@ -511,7 +531,7 @@ class Query
     public function setCallback($callback)
     {
         $this->callback = $callback;
-        
+
         return $this;
     }
 
@@ -558,6 +578,6 @@ class Query
             $query['callback'] = $this->getCallback();
         }
 
-        return sprintf('%s?%s', self::URL, http_build_query($query));
+        return sprintf('%s?%s', $this->getServiceURL(), http_build_query($query));
     }
 }
